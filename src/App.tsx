@@ -1,9 +1,18 @@
-import StarRating from "./components/star-rating/StarRating";
+import { useState } from "react";
+import Popover from "./components/popover/Popover";
 
 function App() {
+  const [triggerPopup, setTriggerPopup] = useState(false);
+
+  const openPopup = () => {
+    setTriggerPopup(true);
+  }
+
   return (
     <div>
-      <StarRating />
+      <button onClick={openPopup}>Click me!</button>
+
+      <Popover width={300} height={300} triggered={triggerPopup} content="Popover inner text" />
     </div>
   );
 }
