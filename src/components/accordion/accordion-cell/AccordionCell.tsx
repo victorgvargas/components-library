@@ -23,7 +23,7 @@ const Button = styled.span<{$triggered: boolean, $firstTriggered: boolean}>`
     `};
 `;
 
-const Container = styled.div<{$expanded: boolean}>`
+const Container = styled.div<{$expanded: boolean, $firstTriggered: boolean}>`
     height: 50px;
     display: flex;
     position: relative;
@@ -34,6 +34,12 @@ const Container = styled.div<{$expanded: boolean}>`
 
     ${props => props.$expanded && css`
         height: 150px;
+        transition: height .3s;
+    `};
+
+    ${props => !props.$expanded && !props.$firstTriggered && css`
+        height: 50px;
+        transition: height .3s;
     `};
 `;
 
@@ -54,7 +60,7 @@ const AccordionCell = ({ title, children } : AccordionCellProps) => {
         setFirstTriggered(false);
     }
 
-    return <Container $expanded={expanded}>
+    return <Container $expanded={expanded} $firstTriggered={firstTriggered}>
         <Button $triggered={expanded} $firstTriggered={firstTriggered} onClick={handleClick}>&gt;</Button>
         <p><strong>{title}</strong></p>
 
