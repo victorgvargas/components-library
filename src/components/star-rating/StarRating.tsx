@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Star from "../star/Star";
+import Star from "./star/Star";
 import { styled } from "styled-components";
 
 const Span = styled.span`

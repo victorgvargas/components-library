@@ -1,19 +1,15 @@
-import { useState } from "react";
-import Popover from "./components/popover/Popover";
+import Accordion from "./components/accordion/Accordion";
+import AccordionCell from "./components/accordion/accordion-cell/AccordionCell";
 
 function App() {
-  const [triggerPopup, setTriggerPopup] = useState(false);
-
-  const openPopup = () => {
-    setTriggerPopup(true);
-  }
+  const cells = [
+    <AccordionCell title="Accordion Component" children={<div>Hello</div>}/>, 
+    <AccordionCell title="Accordion Component" children={<div>Hello</div>}/>,
+    <AccordionCell title="Accordion Component" children={<div>Hello</div>}/>
+  ]
 
   return (
-    <div>
-      <button onClick={openPopup}>Click me!</button>
-
-      <Popover width={300} height={300} triggered={triggerPopup} content="Popover inner text" />
-    </div>
+    <Accordion cells={cells}/>
   );
 }
 
