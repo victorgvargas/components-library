@@ -1,15 +1,12 @@
-import Accordion from "./components/accordion/Accordion";
-import AccordionCell from "./components/accordion/accordion-cell/AccordionCell";
+import Carousel from "./components/carousel/Carousel";
 
 function App() {
-  const cells = [
-    <AccordionCell title="Accordion Component" children={<div>Hello</div>}/>, 
-    <AccordionCell title="Accordion Component" children={<div>Hello</div>}/>,
-    <AccordionCell title="Accordion Component" children={<div>Hello</div>}/>
-  ]
+  const cells = [<div>Hello</div>, <div>World</div>, <div>I'm</div>, <div>Victor</div>, <div>!</div>]
 
   return (
-    <Accordion cells={cells}/>
+    <div className="container">
+      <Carousel children={cells} timer={3000}/>
+    </div>
   );
 }
 
