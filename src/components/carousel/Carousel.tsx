@@ -15,14 +15,17 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
 `;
 
 const Inner = styled.div`
-    max-width: 100%;
-    z-index: -1000;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 `;
 
 const Bullet = styled.span<{$current: boolean}>`
@@ -69,6 +72,7 @@ const Arrow = styled.span<{$next: boolean}>`
 const Carousel = ({ children, timer }: CarouselProps) => {
   const [current, setCurrent] = useState(0);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+  const [mouseDownStart, setMouseDownStart] = useState(0);
   const bullets = new Array(5).fill(<Bullet $current={false}/>);
 
   useEffect(() => {
@@ -114,9 +118,26 @@ const Carousel = ({ children, timer }: CarouselProps) => {
     setCurrent(index);
   }
 
+  const handleMouseDown = (event: React.MouseEvent) => {
+    setMouseDownStart(event.clientX);
+  }
+
+  const handleMouseUp = (event: React.MouseEvent) => {
+    if (mouseDownStart < event.clientX && current === children.length - 1) setCurrent(-1);
+    if (mouseDownStart >= event.clientX && current === 0) setCurrent(children.length);
+    if (mouseDownStart < event.clientX) setCurrent(prev => prev  + 1);
+    if (mouseDownStart >= event.clientX) setCurrent(prev => prev - 1);
+
+    setMouseDownStart(0);
+  }
+
   return (
         <Container>
-            <Inner>{children[current]}</Inner>
+            <Inner 
+                onMouseDown={handleMouseDown} 
+                onMouseUp={handleMouseUp}>
+                    {children[current]}
+            </Inner>
             <Arrow $next onClick={() => handleArrowClick(true)}>&gt;</Arrow>
             <Arrow $next={false} onClick={() => handleArrowClick(false)}>&lt;</Arrow>
             <Bullets>{bullets.map((_, index) => <Bullet key={index} $current={index === current} onClick={() => handleBulletClick(index)}/>)}</Bullets>
